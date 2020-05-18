@@ -1,0 +1,125 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "employeewages-update"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint.",
+				"properties": {
+					"emp_no": {
+						"description": "The employeewages ID",
+						"type": "number"
+					},
+					"data": {
+						"description": "Update body",
+						"$ref": "schema:///model/employeewages"
+					}
+				},
+				"required": [
+					"emp_no",
+					"data"
+				]
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"params",
+			"request",
+			"config",
+			"env"
+		]
+	},
+	"start": "model.update",
+	"nodes": {
+		"model.update": {
+			"type": "nodehandler://api-builder-flow-invoke/model/employeewages",
+			"method": "update",
+			"name": "Update employeewages",
+			"parameters": [
+				{
+					"name": "emp_no",
+					"value": "$.params.emp_no",
+					"metaName": "emp_no"
+				},
+				{
+					"name": "data",
+					"value": "$.params.data",
+					"metaName": "data"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.model",
+					"routes": [
+						"response.success"
+					],
+					"metaName": "Next"
+				},
+				"notfound": {
+					"routes": [
+						"response.error.notfound"
+					],
+					"metaName": "Not Found"
+				}
+			},
+			"metaMethod": "Update"
+		},
+		"response.success": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set success response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"value": "204",
+					"type": "number",
+					"metaName": "status",
+					"metaDescription": "The HTTP status code"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"response.error.notfound": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set not found response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"value": "404",
+					"type": "number",
+					"metaName": "status",
+					"metaDescription": "The HTTP status code"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		}
+	}
+}

@@ -1,0 +1,885 @@
+{
+	"swagger": "2.0",
+	"host": "bladedancer.asuscomm.com:8075",
+	"basePath": "/api",
+	"schemes": [
+		"https"
+	],
+	"paths": {
+		"/practitioner/{id}": {
+			"get": {
+				"description": "Find one practitioner by ID",
+				"operationId": "findPractitionerByID",
+				"tags": [
+					"Practitioner"
+				],
+				"produces": [
+					"application/json",
+					"application/xml",
+					"text/yaml",
+					"text/csv",
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"description": "The practitioner ID",
+						"required": true,
+						"in": "path",
+						"name": "id",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The find succeeded, and the results are available.",
+						"schema": {
+							"required": [
+								"key",
+								"request-id",
+								"success"
+							],
+							"properties": {
+								"code": {
+									"format": "int32",
+									"type": "integer"
+								},
+								"practitioner": {
+									"$ref": "#/definitions/Practitioner-full",
+									"type": "object"
+								},
+								"success": {
+									"type": "boolean"
+								},
+								"message": {
+									"type": "string"
+								},
+								"request-id": {
+									"type": "string"
+								},
+								"key": {
+									"type": "string",
+									"enum": [
+										"practitioner"
+									]
+								},
+								"url": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"404": {
+						"description": "No results were found.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"504": {
+						"description": "The request took too long to process, and the server timed it out.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					}
+				}
+			},
+			"put": {
+				"description": "Update a specific practitioner",
+				"operationId": "updatePractitionerByID",
+				"tags": [
+					"Practitioner"
+				],
+				"consumes": [
+					"application/json",
+					"application/x-www-form-urlencoded",
+					"multipart/form-data"
+				],
+				"produces": [
+					"application/json",
+					"application/xml",
+					"text/yaml",
+					"text/csv",
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"description": "The practitioner ID",
+						"required": true,
+						"in": "path",
+						"name": "id",
+						"type": "string"
+					},
+					{
+						"description": "Update body",
+						"required": true,
+						"in": "body",
+						"name": "Update",
+						"schema": {
+							"properties": {
+								"lastName": {
+									"description": "lastName field",
+									"type": "string"
+								},
+								"name": {
+									"description": "name field",
+									"type": "string"
+								},
+								"email": {
+									"description": "email field",
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "The update succeeded."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"404": {
+						"description": "No results were found.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"504": {
+						"description": "The request took too long to process, and the server timed it out.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "Delete a specific practitioner",
+				"operationId": "deletePractitionerByID",
+				"tags": [
+					"Practitioner"
+				],
+				"produces": [
+					"application/json",
+					"application/xml",
+					"text/yaml",
+					"text/csv",
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"description": "The practitioner ID",
+						"required": true,
+						"in": "path",
+						"name": "id",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "The delete succeeded."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"404": {
+						"description": "No results were found.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"504": {
+						"description": "The request took too long to process, and the server timed it out.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					}
+				}
+			}
+		},
+		"/practitioner/distinct/{field}": {
+			"get": {
+				"description": "Find distinct practitioners",
+				"operationId": "findPractitionerDistinctByFIELD",
+				"tags": [
+					"Practitioner"
+				],
+				"produces": [
+					"application/json",
+					"application/xml",
+					"text/yaml",
+					"text/csv",
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"description": "The number of records to fetch. The value must be greater than 0, and no greater than 1000.",
+						"required": false,
+						"in": "query",
+						"name": "limit",
+						"type": "number"
+					},
+					{
+						"description": "The number of records to skip. The value must not be less than 0.",
+						"required": false,
+						"in": "query",
+						"name": "skip",
+						"type": "number"
+					},
+					{
+						"description": "Constrains values for fields. The value should be encoded JSON.",
+						"required": false,
+						"in": "query",
+						"name": "where",
+						"type": "string"
+					},
+					{
+						"description": "A dictionary of one or more fields specifying sorting of results. In general, you can sort based on any predefined field that you can query using the where operator, as well as on custom fields. The value should be encoded JSON.",
+						"required": false,
+						"in": "query",
+						"name": "order",
+						"type": "string"
+					},
+					{
+						"description": "The field name that must be distinct.",
+						"required": true,
+						"in": "path",
+						"name": "field",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Distinct fields response.",
+						"schema": {
+							"required": [
+								"key",
+								"request-id",
+								"success"
+							],
+							"properties": {
+								"practitioners": {
+									"items": {
+										"type": "string"
+									},
+									"uniqueItems": true,
+									"type": "array"
+								},
+								"code": {
+									"format": "int32",
+									"type": "integer"
+								},
+								"success": {
+									"type": "boolean"
+								},
+								"message": {
+									"type": "string"
+								},
+								"request-id": {
+									"type": "string"
+								},
+								"key": {
+									"type": "string",
+									"enum": [
+										"practitioners"
+									]
+								},
+								"url": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"404": {
+						"description": "No results were found.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"504": {
+						"description": "The request took too long to process, and the server timed it out.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					}
+				}
+			}
+		},
+		"/practitioner": {
+			"get": {
+				"description": "Find all practitioners",
+				"operationId": "findPractitioner",
+				"tags": [
+					"Practitioner"
+				],
+				"produces": [
+					"application/json",
+					"application/xml",
+					"text/yaml",
+					"text/csv",
+					"text/plain"
+				],
+				"responses": {
+					"200": {
+						"description": "The find all succeeded, and the results are available.",
+						"schema": {
+							"required": [
+								"key",
+								"request-id",
+								"success"
+							],
+							"properties": {
+								"practitioners": {
+									"items": {
+										"$ref": "#/definitions/Practitioner-full",
+										"type": "object"
+									},
+									"type": "array"
+								},
+								"code": {
+									"format": "int32",
+									"type": "integer"
+								},
+								"success": {
+									"type": "boolean"
+								},
+								"message": {
+									"type": "string"
+								},
+								"request-id": {
+									"type": "string"
+								},
+								"key": {
+									"type": "string",
+									"enum": [
+										"practitioners"
+									]
+								},
+								"url": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"404": {
+						"description": "No results were found.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"504": {
+						"description": "The request took too long to process, and the server timed it out.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					}
+				}
+			},
+			"post": {
+				"description": "Create a practitioner",
+				"operationId": "createPractitioner",
+				"tags": [
+					"Practitioner"
+				],
+				"consumes": [
+					"application/json",
+					"application/x-www-form-urlencoded",
+					"multipart/form-data"
+				],
+				"produces": [
+					"application/json",
+					"application/xml",
+					"text/yaml",
+					"text/csv",
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"description": "Create body",
+						"required": true,
+						"in": "body",
+						"name": "Create",
+						"schema": {
+							"required": [
+								"email",
+								"lastName",
+								"name"
+							],
+							"properties": {
+								"lastName": {
+									"description": "lastName field",
+									"type": "string"
+								},
+								"name": {
+									"description": "name field",
+									"type": "string"
+								},
+								"email": {
+									"description": "email field",
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "The create succeeded.",
+						"headers": {
+							"Location": {
+								"description": "The URL to the newly created instance.",
+								"type": "string"
+							}
+						}
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"404": {
+						"description": "No results were found.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"504": {
+						"description": "The request took too long to process, and the server timed it out.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "Deletes all practitioners",
+				"operationId": "deletePractitioner",
+				"tags": [
+					"Practitioner"
+				],
+				"produces": [
+					"application/json",
+					"application/xml",
+					"text/yaml",
+					"text/csv",
+					"text/plain"
+				],
+				"responses": {
+					"204": {
+						"description": "The delete succeeded."
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"404": {
+						"description": "No results were found.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"504": {
+						"description": "The request took too long to process, and the server timed it out.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					}
+				}
+			}
+		},
+		"/practitioner/query": {
+			"get": {
+				"description": "Query practitioners",
+				"operationId": "findPractitionerQuery",
+				"tags": [
+					"Practitioner"
+				],
+				"produces": [
+					"application/json",
+					"application/xml",
+					"text/yaml",
+					"text/csv",
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"description": "The number of records to fetch. The value must be greater than 0, and no greater than 1000.",
+						"required": false,
+						"in": "query",
+						"name": "limit",
+						"type": "number"
+					},
+					{
+						"description": "The number of records to skip. The value must not be less than 0.",
+						"required": false,
+						"in": "query",
+						"name": "skip",
+						"type": "number"
+					},
+					{
+						"description": "Constrains values for fields. The value should be encoded JSON.",
+						"required": false,
+						"in": "query",
+						"name": "where",
+						"type": "string"
+					},
+					{
+						"description": "A dictionary of one or more fields specifying sorting of results. In general, you can sort based on any predefined field that you can query using the where operator, as well as on custom fields. The value should be encoded JSON.",
+						"required": false,
+						"in": "query",
+						"name": "order",
+						"type": "string"
+					},
+					{
+						"description": "Selects which fields to return from the query. Others are excluded. The value should be encoded JSON.",
+						"required": false,
+						"in": "query",
+						"name": "sel",
+						"type": "string"
+					},
+					{
+						"description": "Selects which fields to not return from the query. Others are included. The value should be encoded JSON.",
+						"required": false,
+						"in": "query",
+						"name": "unsel",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The query succeeded, and the results are available.",
+						"schema": {
+							"required": [
+								"key",
+								"request-id",
+								"success"
+							],
+							"properties": {
+								"practitioners": {
+									"items": {
+										"$ref": "#/definitions/Practitioner-full",
+										"type": "object"
+									},
+									"type": "array"
+								},
+								"code": {
+									"format": "int32",
+									"type": "integer"
+								},
+								"success": {
+									"type": "boolean"
+								},
+								"message": {
+									"type": "string"
+								},
+								"request-id": {
+									"type": "string"
+								},
+								"key": {
+									"type": "string",
+									"enum": [
+										"practitioners"
+									]
+								},
+								"url": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"404": {
+						"description": "No results were found.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"504": {
+						"description": "The request took too long to process, and the server timed it out.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					}
+				}
+			}
+		},
+		"/practitioner/count": {
+			"get": {
+				"description": "Count practitioners",
+				"operationId": "findPractitionerCount",
+				"tags": [
+					"Practitioner"
+				],
+				"produces": [
+					"application/json",
+					"application/xml",
+					"text/yaml",
+					"text/csv",
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"description": "Constrains values for fields. The value should be encoded JSON.",
+						"required": false,
+						"in": "query",
+						"name": "where",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The count succeeded, and the results are available.",
+						"schema": {
+							"required": [
+								"key",
+								"request-id",
+								"success"
+							],
+							"properties": {
+								"code": {
+									"format": "int32",
+									"type": "integer"
+								},
+								"practitioner": {
+									"type": "integer"
+								},
+								"success": {
+									"type": "boolean"
+								},
+								"message": {
+									"type": "string"
+								},
+								"request-id": {
+									"type": "string"
+								},
+								"key": {
+									"type": "string",
+									"enum": [
+										"practitioner"
+									]
+								},
+								"url": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					},
+					"401": {
+						"description": "This request requires user authentication, as configured by the server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"404": {
+						"description": "No results were found.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"500": {
+						"description": "Something went wrong during the request; check out the logs on your server.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					},
+					"504": {
+						"description": "The request took too long to process, and the server timed it out.",
+						"schema": {
+							"$ref": "#/definitions/ErrorModel"
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"ResponseModel": {
+			"required": [
+				"request-id",
+				"success"
+			],
+			"properties": {
+				"code": {
+					"format": "int32",
+					"type": "integer"
+				},
+				"success": {
+					"default": false,
+					"type": "boolean"
+				},
+				"request-id": {
+					"type": "string"
+				},
+				"message": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"ErrorModel": {
+			"required": [
+				"code",
+				"message",
+				"request-id",
+				"success"
+			],
+			"properties": {
+				"code": {
+					"format": "int32",
+					"type": "integer"
+				},
+				"success": {
+					"default": false,
+					"type": "boolean"
+				},
+				"request-id": {
+					"type": "string"
+				},
+				"message": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Practitioner-full": {
+			"required": [
+				"email",
+				"id",
+				"lastName",
+				"name"
+			],
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"lastName": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"id": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		}
+	},
+	"info": {
+		"title": "MongoPractitionerWithArsHost.json",
+		"description": "An API Builder service",
+		"version": "1.0.0"
+	},
+	"x-axway": {
+		"corsEnabled": true,
+		"basePaths": [
+			""
+		],
+		"serviceType": "rest",
+		"deprecated": false,
+		"tags": {
+			"PushToAmplify": [
+				"true"
+			]
+		},
+		"availableSDK": {
+			"ios-swift": "/discovery/sdk/4cfa23c7-26a8-4888-9574-2176844e97a6/ios-swift",
+			"titanium": "/discovery/sdk/4cfa23c7-26a8-4888-9574-2176844e97a6/titanium",
+			"android": "/discovery/sdk/4cfa23c7-26a8-4888-9574-2176844e97a6/android",
+			"nodejs": "/discovery/sdk/4cfa23c7-26a8-4888-9574-2176844e97a6/nodejs"
+		},
+		"customProperties": {}
+	}
+}

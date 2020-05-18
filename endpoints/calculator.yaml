@@ -1,0 +1,41 @@
+swagger: '2.0'
+info:
+  title: Calculator
+  version: '1.0'
+host: 'localhost:3000'
+schemes:
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /add:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              result:
+                type: number
+      operationId: get-add
+      description: Add two numbers
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              first_number:
+                type: number
+              second_number:
+                type: number
+            required:
+              - first_number
+              - second_number
+      x-flow: calculator-get-add
+definitions: {}
